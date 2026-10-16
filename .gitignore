@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.DS_Store
+
+# Keep hidden held-out ground truth private to prevent benchmark contamination
+data/private_heldout_ground_truth.json
+data/*_private_*.json

@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "controltrace"
+version = "0.1.0"
+description = "ControlTrace: Evaluating AI Judgment, Evidence Sufficiency, and Calibrated Escalation Under PCAOB AS 1105 & ISA 500"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+  {name = "Ramkumar Bharathan"}
+]
+keywords = [
+  "ai-evaluations",
+  "conceptual-reasoning",
+  "audit-evidence",
+  "pcaob-as-1105",
+  "isa-500",
+  "professional-skepticism",
+  "calibrated-escalation"
+]
+dependencies = []
+
+[project.scripts]
+controltrace = "controltrace.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

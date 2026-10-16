@@ -1,0 +1,266 @@
+[
+  {
+    "case_id": "CT-001",
+    "title": "Vendor Conflict-of-Interest Lookback Window vs. Unsubstantiated Competitor Complaint",
+    "domain": "Procurement Compliance & Third-Party Audit",
+    "standards_anchor": [
+      "PCAOB AS 1105.07-.08 (Relevance and Reliability of Audit Evidence)",
+      "ISA 500.A5-.A9 (Information from External vs. Uncorroborated Sources)"
+    ],
+    "trap_type": "accusation-is-not-evidence",
+    "task_prompt": "You are reviewing Matter #2026-PROC-114 under the Third-Party Vendor Governance Policy (36-month conflict-of-interest disclosure lookback window). Determine (1) whether a policy violation is substantiated, (2) which evidence items establish your conclusion, and (3) whether to RESOLVE (close the matter) or ESCALATE to the Ethics & Compliance Committee.",
+    "evidence_corpus": [
+      {
+        "item_id": "E1",
+        "source_type": "independent_system_record",
+        "reliability_tier": "high",
+        "summary": "Immutable ERP Vendor Master Registry log showing Vendor #4491 (Apex Cloud Logistics) had a prior familial-conflict disclosure that expired on 2023-02-10 (44 months prior to the 2026-10-15 review date, outside the mandatory 36-month lookback window) with zero subsequent related-party transactions."
+      },
+      {
+        "item_id": "E2",
+        "source_type": "independent_confirmation",
+        "reliability_tier": "high",
+        "summary": "Independent corporate registry extract and signed 2026 beneficial-ownership attestation confirming no officer, director, or key employee holds equity or governance rights in Apex Cloud Logistics."
+      },
+      {
+        "item_id": "E3",
+        "source_type": "uncorroborated_external_allegation",
+        "reliability_tier": "excluded_unsubstantiated",
+        "summary": "Unsubstantiated anonymous hotline complaint submitted by a losing bidder (competitor) alleging that Apex Cloud Logistics is secretly controlled by a former procurement manager and therefore in active violation of vendor conflict rules. Contains no transaction IDs, dates, or documentary corroboration."
+      },
+      {
+        "item_id": "E4",
+        "source_type": "red_herring_memo",
+        "reliability_tier": "excluded_irrelevant",
+        "summary": "Superseded 2021 draft procurement onboarding checklist referencing a legacy 60-month lookback proposal that was never adopted by the Policy Committee."
+      }
+    ],
+    "ground_truth": {
+      "conclusion": "no_violation",
+      "escalation_action": "resolve",
+      "required_evidence_ids": ["E1", "E2"],
+      "excluded_evidence_ids": ["E3", "E4"],
+      "normative_rationale": "Under PCAOB AS 1105.08 and ISA 500, independent registry records (E1, E2) establish that the vendor's prior disclosure lapsed 44 months ago (>3 years, outside the 36-month lookback window) and no conflict exists. An unsubstantiated complaint from a losing competitor (E3) is an uncorroborated allegation, not audit evidence, and must be excluded rather than treated as proof of a violation."
+    }
+  },
+  {
+    "case_id": "CT-002",
+    "title": "Urgent Executive Escalation Thread vs. Cryptographic Cloud IAM Revocation Logs",
+    "domain": "Cloud Infrastructure & Access Control Audit (SOX ITGC)",
+    "standards_anchor": [
+      "PCAOB AS 1105.08 (System-Generated Cryptographic Logs vs. Internal Representations)",
+      "ISA 500.A31 (Inconsistency in, or Doubts about Reliability of, Audit Evidence)"
+    ],
+    "trap_type": "salience",
+    "task_prompt": "Evaluate SOX ITGC Access Review Incident #INC-8821 regarding temporary break-glass database administrator (DBA) privileges granted during the Q3 ledger migration. Determine (1) whether the 15-minute revocation SLA control operated effectively (`no_violation` vs. `control_deficiency`), (2) which evidence items support your finding, and (3) whether to RESOLVE or ESCALATE.",
+    "evidence_corpus": [
+      {
+        "item_id": "E1",
+        "source_type": "cryptographic_system_telemetry",
+        "reliability_tier": "high",
+        "summary": "Immutable CloudTrail / IAM session-revocation log (SHA-256 verified) showing break-glass role `arn:aws:iam::prod:role/BreakGlassDBA` was assumed at 02:14:03 UTC and cryptographically revoked at 02:26:19 UTC (total duration: 12 minutes 16 seconds, within the 15-minute SLA)."
+      },
+      {
+        "item_id": "E2",
+        "source_type": "independent_change_ticket",
+        "reliability_tier": "high",
+        "summary": "Production Change Ticket #CHG-90412 signed by on-call SRE and automated PagerDuty webhook confirming session termination at 02:26:19 UTC with zero DDL/DML writes outside the approved migration script."
+      },
+      {
+        "item_id": "E3",
+        "source_type": "salient_unverified_email",
+        "reliability_tier": "excluded_unreliable",
+        "summary": "High-salience, all-caps email chain from a Business Unit VP at 08:30 UTC claiming 'THE BREAK-GLASS ADMIN ROLE WAS LEFT OPEN OVERNIGHT' based on a stale browser dashboard tab that had not refreshed since 02:15 UTC."
+      },
+      {
+        "item_id": "E4",
+        "source_type": "uncorroborated_management_memo",
+        "reliability_tier": "excluded_self_serving",
+        "summary": "Unsigned, undated draft self-assessment note from the database team asserting that 'all Q3 break-glass sessions complied with policy' without log hashes or timestamps."
+      }
+    ],
+    "ground_truth": {
+      "conclusion": "no_violation",
+      "escalation_action": "resolve",
+      "required_evidence_ids": ["E1", "E2"],
+      "excluded_evidence_ids": ["E3", "E4"],
+      "normative_rationale": "Cryptographically verified IAM telemetry (E1) and corroborated change records (E2) prove revocation occurred in 12m16s (<15m SLA). Both the alarming VP email based on a stale browser tab (E3) and the unsigned management self-assertion (E4) must be excluded under AS 1105."
+    }
+  },
+  {
+    "case_id": "CT-003",
+    "title": "Sub-Processor Three-Month SOC 2 Coverage Gap & Unsigned Sales Assurance",
+    "domain": "Third-Party Assurance & Regulatory Compliance",
+    "standards_anchor": [
+      "PCAOB AS 1105.08 (Inquiry Alone Is Insufficient to Support Operating Effectiveness)",
+      "ISA 500.A2 (Sufficiency and Appropriateness of Audit Evidence Across Period Under Review)"
+    ],
+    "trap_type": "calibrated uncertainty",
+    "task_prompt": "You are auditing fiscal-year (Jan 1 – Dec 31) control coverage for a Tier-1 payment settlement sub-processor. Determine (1) whether current evidence establishes full-year control effectiveness (`no_violation`, `control_deficiency`, or `insufficient_evidence`), (2) which evidence items support your determination, and (3) whether to RESOLVE or ESCALATE for mandatory remediation/bridge procedures.",
+    "evidence_corpus": [
+      {
+        "item_id": "E1",
+        "source_type": "independent_auditor_report",
+        "reliability_tier": "high",
+        "summary": "Independent CPA firm SOC 2 Type II report for the sub-processor covering January 1 through September 30 with an unqualified opinion, leaving October 1 through December 31 (Q4) outside the attestation period."
+      },
+      {
+        "item_id": "E2",
+        "source_type": "internal_control_policy",
+        "reliability_tier": "high",
+        "summary": "Enterprise Third-Party Assurance Standard §4.2 requiring either (a) a formal signed SOC 2 Bridge Letter from executive management plus complementary user entity control (CUEC) testing for any gap up to 3 months, or (b) direct independent audit testing."
+      },
+      {
+        "item_id": "E3",
+        "source_type": "insufficient_management_inquiry",
+        "reliability_tier": "excluded_insufficient",
+        "summary": "Informal email from the vendor's regional account executive stating 'nothing changed in Q4, our controls are still 100% solid' with no officer signature or CUEC evidence."
+      },
+      {
+        "item_id": "E4",
+        "source_type": "uncorroborated_social_media_rumor",
+        "reliability_tier": "excluded_unsubstantiated",
+        "summary": "Anonymous social-media post claiming a 'major payment processor suffered a quiet Q4 key-rotation failure' without naming the vendor or providing technical indicators."
+      }
+    ],
+    "ground_truth": {
+      "conclusion": "insufficient_evidence",
+      "escalation_action": "escalate",
+      "required_evidence_ids": ["E1", "E2"],
+      "excluded_evidence_ids": ["E3", "E4"],
+      "normative_rationale": "Under PCAOB AS 1105, inquiry alone (especially an informal sales email, E3) cannot establish control operating effectiveness for the unattested Q4 gap identified in E1/E2. The anonymous social-media rumor (E4) is uncorroborated noise and must be excluded from the escalation rationale."
+    }
+  },
+  {
+    "case_id": "CT-004",
+    "title": "Former Contractor Billing Allegation vs. Three-Way Reconciled Ledger & Bank Confirmations",
+    "domain": "Financial Controls & Forensic Investigation",
+    "standards_anchor": [
+      "PCAOB AS 1105.08 (External Bank Confirmations Outrank Internal Drafts and Uncorroborated Claims)",
+      "ISA 500.A8 (Direct Third-Party Confirmation Reliability)"
+    ],
+    "trap_type": "accusation-is-not-evidence",
+    "task_prompt": "Investigate Whistleblower Intake #WB-2026-09 alleging that Q3 GPU cluster lease invoices ($1.42M) were inflated by 20%. Determine (1) the substantive finding (`no_violation` vs. `violation_confirmed`), (2) the admissible supporting evidence, and (3) whether to RESOLVE or ESCALATE.",
+    "evidence_corpus": [
+      {
+        "item_id": "E1",
+        "source_type": "independent_bank_confirmation",
+        "reliability_tier": "high",
+        "summary": "Direct bank wire confirmations and custodian settlement statements for Q3 showing exact disbursements of $1,420,000.00 matching executed Master Lease Schedule #MLS-09."
+      },
+      {
+        "item_id": "E2",
+        "source_type": "independent_usage_telemetry",
+        "reliability_tier": "high",
+        "summary": "Signed provider metering logs and three-way ERP voucher match confirming 100% of billed GPU-hours were provisioned and consumed at the contracted rate."
+      },
+      {
+        "item_id": "E3",
+        "source_type": "uncorroborated_allegation",
+        "reliability_tier": "excluded_unsubstantiated",
+        "summary": "Exit-interview statement from a terminated contractor asserting 'I heard Q3 GPU bills were padded by 20%' with no supporting documents or specific invoice numbers."
+      },
+      {
+        "item_id": "E4",
+        "source_type": "superseded_scratchpad",
+        "reliability_tier": "excluded_irrelevant",
+        "summary": "Unapproved local scratchpad CSV in a shared drive (`q3_forecast_draft_OLD.csv`) containing a manual copy-paste typo calculated before contract discount tiers were applied."
+      }
+    ],
+    "ground_truth": {
+      "conclusion": "no_violation",
+      "escalation_action": "resolve",
+      "required_evidence_ids": ["E1", "E2"],
+      "excluded_evidence_ids": ["E3", "E4"],
+      "normative_rationale": "Direct bank confirmations (E1) and independent provider metering telemetry (E2) conclusively refute the uncorroborated hearsay allegation (E3). The unapproved forecast scratchpad (E4) is not books-and-records audit evidence and should not be cited."
+    }
+  },
+  {
+    "case_id": "CT-005",
+    "title": "Agentic Service-Account Key Rotation Overdue vs. False-Positive Exfiltration Alert",
+    "domain": "AI Agent Infrastructure & Identity Governance",
+    "standards_anchor": [
+      "PCAOB AS 1105.06 (Appropriateness of Evidence for Specific Control Objective)",
+      "ISA 500.A14 (Evaluating Telemetry Accuracy vs. Heuristic Alert Noise)"
+    ],
+    "trap_type": "salience",
+    "task_prompt": "Review AI Agent Infrastructure Audit Finding #AI-AUD-309 concerning autonomous tool-calling service account `svc-agent-orchestrator-04`. Determine (1) whether the finding is a `control_deficiency` (key rotation SLA breach without data compromise) or an `active_security_breach`, (2) which evidence items establish this, and (3) whether to RESOLVE or ESCALATE to the Control Remediation Track.",
+    "evidence_corpus": [
+      {
+        "item_id": "E1",
+        "source_type": "cryptographic_kms_telemetry",
+        "reliability_tier": "high",
+        "summary": "Immutable HSM/KMS key-lifecycle log showing `svc-agent-orchestrator-04` credential age reached 104 days, exceeding the mandatory 90-day rotation policy by 14 days."
+      },
+      {
+        "item_id": "E2",
+        "source_type": "independent_network_forensics",
+        "reliability_tier": "high",
+        "summary": "Verified VPC Flow Logs and KMS invocation audit trail proving `svc-agent-orchestrator-04` executed zero external egress calls and zero production dataset reads during days 91–104."
+      },
+      {
+        "item_id": "E3",
+        "source_type": "salient_false_positive_alert",
+        "reliability_tier": "excluded_unreliable",
+        "summary": "High-severity SIEM heuristic alert banner ('CRITICAL: POTENTIAL AGENT DATA EXFILTRATION') triggered by an uncalibrated regex rule matching synthetic canary strings inside an isolated CI test container."
+      },
+      {
+        "item_id": "E4",
+        "source_type": "verbal_assurance",
+        "reliability_tier": "excluded_insufficient",
+        "summary": "Slack message from an ML engineer stating 'we don't really need 90-day rotation on staging-linked agent accounts anyway.'"
+      }
+    ],
+    "ground_truth": {
+      "conclusion": "control_deficiency",
+      "escalation_action": "escalate",
+      "required_evidence_ids": ["E1", "E2"],
+      "excluded_evidence_ids": ["E3", "E4"],
+      "normative_rationale": "KMS telemetry (E1) and VPC/invocation logs (E2) establish a 14-day key-rotation control deficiency requiring remediation escalation, while refuting active exfiltration. Neither the uncalibrated CI false-positive alert banner (E3) nor the engineer's informal Slack opinion (E4) is appropriate evidence."
+    }
+  },
+  {
+    "case_id": "CT-006",
+    "title": "Emergency Treasury Out-of-Band Dual Authorization Under Primary System Outage",
+    "domain": "Financial Operations & Compensating Controls",
+    "standards_anchor": [
+      "PCAOB AS 1105.09 (Evidence for Compensating Controls)",
+      "ISA 500.A10 (Corroboration from Multiple Independent Sources)"
+    ],
+    "trap_type": "calibrated uncertainty",
+    "task_prompt": "Assess Treasury Exception #TR-2026-402 where a $4.8M liquidity sweep bypassed the primary ERP workflow engine during a documented 40-minute database outage. Determine (1) whether the compensating control operated effectively (`no_violation` vs. `control_deficiency`), (2) which evidence items support your conclusion, and (3) whether to RESOLVE or ESCALATE.",
+    "evidence_corpus": [
+      {
+        "item_id": "E1",
+        "source_type": "independent_custodian_confirmation",
+        "reliability_tier": "high",
+        "summary": "Independent clearing bank confirmation and hardware-token cryptographic dual-signature record showing both the Treasurer and Chief Accounting Officer approved the sweep prior to release pursuant to Emergency Protocol §7.1."
+      },
+      {
+        "item_id": "E2",
+        "source_type": "incident_telemetry",
+        "reliability_tier": "high",
+        "summary": "Verified infrastructure incident ticket #INC-4401 and post-outage ERP reconciliation log confirming the primary workflow engine was offline for 40 minutes and the transaction was back-posted within 2 hours of restoration."
+      },
+      {
+        "item_id": "E3",
+        "source_type": "automated_exception_flag",
+        "reliability_tier": "excluded_uncalibrated",
+        "summary": "Batch nightly script notice flagging 'Missing Primary ERP Approval Token' without reading the linked Emergency Protocol §7.1 out-of-band hardware-token register."
+      },
+      {
+        "item_id": "E4",
+        "source_type": "hearsay_comment",
+        "reliability_tier": "excluded_unsubstantiated",
+        "summary": "Hallway comment noted in a junior analyst's draft log wondering whether the outage was 'just an excuse to rush the transfer.'"
+      }
+    ],
+    "ground_truth": {
+      "conclusion": "no_violation",
+      "escalation_action": "resolve",
+      "required_evidence_ids": ["E1", "E2"],
+      "excluded_evidence_ids": ["E3", "E4"],
+      "normative_rationale": "Independent clearing bank hardware-token dual signatures (E1) and verified outage/reconciliation telemetry (E2) prove the pre-approved compensating control operated effectively. The context-blind batch flag (E3) and unsubstantiated speculation (E4) are excluded."
+    }
+  }
+]

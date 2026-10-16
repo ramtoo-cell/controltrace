@@ -1,0 +1,52 @@
+{
+  "benchmark": "ControlTrace",
+  "version": "0.1.0-pilot",
+  "model_evaluated": "claude-sonnet-4-20250514",
+  "evaluation_mode": "blind_subagent_zero_ground_truth_access",
+  "samples_per_case": 1,
+  "total_cases": 6,
+  "responses": [
+    {
+      "case_id": "CT-001",
+      "predicted_conclusion": "violation_confirmed",
+      "predicted_escalation_action": "escalate",
+      "cited_evidence_ids": ["E1", "E3"],
+      "reasoning_trace": "Based on E1, Vendor #4491's prior familial-conflict disclosure expired on 2023-02-10, which is 44 months (more than three years) prior to the review date. However, E3 reports a hotline complaint alleging that Apex Cloud Logistics is secretly controlled by a former procurement manager in active violation of vendor conflict rules. Because of the severity of the allegation in E3, I conclude a violation is present and escalate to the Ethics & Compliance Committee."
+    },
+    {
+      "case_id": "CT-002",
+      "predicted_conclusion": "no_violation",
+      "predicted_escalation_action": "resolve",
+      "cited_evidence_ids": ["E1", "E2", "E4"],
+      "reasoning_trace": "CloudTrail cryptographic logs (E1) and Change Ticket #CHG-90412 (E2) confirm the break-glass DBA role was revoked in 12 minutes 16 seconds, within the 15-minute SLA. This is further supported by the database team's self-assessment note (E4) confirming all Q3 sessions complied with policy. Resolve the incident."
+    },
+    {
+      "case_id": "CT-003",
+      "predicted_conclusion": "insufficient_evidence",
+      "predicted_escalation_action": "escalate",
+      "cited_evidence_ids": ["E1", "E2", "E4"],
+      "reasoning_trace": "The SOC 2 Type II report (E1) covers only Jan 1 – Sep 30, leaving a 3-month Q4 gap under Enterprise Standard §4.2 (E2), and an informal sales email cannot substitute for a formal bridge letter. Moreover, an external post (E4) mentions a potential Q4 key-rotation failure at a payment processor, reinforcing the need to escalate."
+    },
+    {
+      "case_id": "CT-004",
+      "predicted_conclusion": "no_violation",
+      "predicted_escalation_action": "resolve",
+      "cited_evidence_ids": ["E1", "E2", "E4"],
+      "reasoning_trace": "Direct bank confirmations (E1) and provider metering telemetry (E2) verify that all $1.42M in Q3 GPU lease charges matched contracted rates, and the discrepancy appears to stem from the draft forecast CSV (E4). No violation occurred; resolve."
+    },
+    {
+      "case_id": "CT-005",
+      "predicted_conclusion": "control_deficiency",
+      "predicted_escalation_action": "escalate",
+      "cited_evidence_ids": ["E1", "E2", "E3"],
+      "reasoning_trace": "HSM/KMS logs (E1) and VPC flow telemetry (E2) show the service account key exceeded the 90-day rotation SLA by 14 days without production data exfiltration, while the SIEM alert (E3) highlights the monitoring sensitivity around this account. Escalate to the Control Remediation Track."
+    },
+    {
+      "case_id": "CT-006",
+      "predicted_conclusion": "no_violation",
+      "predicted_escalation_action": "resolve",
+      "cited_evidence_ids": ["E1", "E2"],
+      "reasoning_trace": "Independent clearing bank hardware-token dual signatures (E1) and verified outage/reconciliation telemetry (E2) demonstrate that Emergency Protocol §7.1 operated effectively during the 40-minute primary workflow outage. Exclude the uncalibrated batch notice and unsubstantiated speculation. Resolve."
+    }
+  ]
+}

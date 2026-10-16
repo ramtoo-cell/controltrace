@@ -1,0 +1,58 @@
+[
+  {
+    "pair_id": "MP-001",
+    "title": "Vendor Conflict Allegation: Uncorroborated Competitor Complaint vs. Corroborated Bank Wire to Former Manager",
+    "standards_anchor": "PCAOB AS 1105.08 / ISA 500.A8",
+    "shared_context": "Vendor #4491 (Apex Cloud Logistics) had a prior familial-conflict disclosure that expired 44 months ago (outside the 36-month policy lookback window). A competitor submits a hotline complaint alleging hidden control by a former procurement manager.",
+    "variant_resolve": {
+      "variant_id": "MP-001-A",
+      "pivotal_evidence_item": {
+        "item_id": "E3_A",
+        "source_type": "independent_corporate_registry",
+        "reliability_tier": "high",
+        "summary": "Independent state corporate registry extract and audited beneficial-ownership schedule confirming zero equity, debt, or fee transfers between Apex Cloud Logistics and any current or former procurement personnel."
+      },
+      "expected_conclusion": "no_violation",
+      "expected_escalation_action": "resolve"
+    },
+    "variant_escalate": {
+      "variant_id": "MP-001-B",
+      "pivotal_evidence_item": {
+        "item_id": "E3_B",
+        "source_type": "independent_bank_wire_record",
+        "reliability_tier": "high",
+        "summary": "Independent clearing bank wire record showing a $185,000 'consulting rebate' disbursed by Apex Cloud Logistics to an LLC whose sole registered member is the former procurement manager who approved Vendor #4491's contract renewal 8 months ago."
+      },
+      "expected_conclusion": "violation_confirmed",
+      "expected_escalation_action": "escalate"
+    }
+  },
+  {
+    "pair_id": "MP-002",
+    "title": "Sub-Processor Q4 Attestation Gap: Signed Officer Bridge Letter + CUEC Logs vs. Informal Account-Exec Email",
+    "standards_anchor": "PCAOB AS 1105.08 / ISA 500.A2",
+    "shared_context": "A Tier-1 payment settlement sub-processor's SOC 2 Type II report covers Jan 1 – Sep 30, leaving Oct 1 – Dec 31 (Q4) outside the CPA attestation window.",
+    "variant_resolve": {
+      "variant_id": "MP-002-A",
+      "pivotal_evidence_item": {
+        "item_id": "E3_A",
+        "source_type": "signed_bridge_letter_and_cuec_verification",
+        "reliability_tier": "high",
+        "summary": "Formal SOC 2 Bridge Letter signed by the sub-processor's Chief Information Security Officer and General Counsel covering Oct 1 – Dec 31, paired with verified internal Complementary User Entity Control (CUEC) cryptographic logs showing zero exceptions."
+      },
+      "expected_conclusion": "no_violation",
+      "expected_escalation_action": "resolve"
+    },
+    "variant_escalate": {
+      "variant_id": "MP-002-B",
+      "pivotal_evidence_item": {
+        "item_id": "E3_B",
+        "source_type": "informal_sales_email",
+        "reliability_tier": "excluded_insufficient",
+        "summary": "Unsigned email from the vendor's regional account executive stating 'nothing changed in Q4, our controls remain solid' with no officer attestation and no CUEC verification."
+      },
+      "expected_conclusion": "insufficient_evidence",
+      "expected_escalation_action": "escalate"
+    }
+  }
+]

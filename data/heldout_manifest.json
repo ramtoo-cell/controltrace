@@ -1,0 +1,31 @@
+{
+  "manifest_version": "0.1.0",
+  "policy": "Hidden ground truth for the extended evaluation split is kept private to prevent benchmark contamination and reward hacking. Only task prompts, evidence corpora, and SHA-256 commitments of the canonical ground-truth records are published.",
+  "standards_anchor": ["PCAOB AS 1105", "ISA 500"],
+  "heldout_commitments": [
+    {
+      "case_id": "CT-H01",
+      "trap_type": "accusation-is-not-evidence",
+      "domain": "AI Model Governance & Training Data Provenance",
+      "ground_truth_sha256": "9f84c219a7e45d03b1d8c66e3a81e7b249f01a22d83e11c4098b55d6e712a304"
+    },
+    {
+      "case_id": "CT-H02",
+      "trap_type": "salience",
+      "domain": "Cloud KMS & Cross-Tenant Isolation Audit",
+      "ground_truth_sha256": "4c19e082b6f37a14d9081e55c27b9a4301f8e2d49a12b67c3380e4157a99d108"
+    },
+    {
+      "case_id": "CT-H03",
+      "trap_type": "calibrated uncertainty",
+      "domain": "SOX ITGC Automated Change-Management Pipeline",
+      "ground_truth_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case_id": "CT-H04",
+      "trap_type": "accusation-is-not-evidence",
+      "domain": "Regulatory Examination & Whistleblower Triage",
+      "ground_truth_sha256": "7d21f89b03e44c19a68b2041d5e992a7c8301b45e67d1123f4908a66c12e4491"
+    }
+  ]
+}
