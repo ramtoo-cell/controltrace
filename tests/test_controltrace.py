@@ -10,6 +10,7 @@ from controltrace.scorer import (
     evaluate_suite,
     evaluate_minimal_pairs,
 )
+from controltrace.env import ControlTraceEnv
 
 
 class TestControlTracePilot(unittest.TestCase):
@@ -84,6 +85,27 @@ class TestControlTracePilot(unittest.TestCase):
         }
         mp_uncalibrated = evaluate_minimal_pairs(pair_predictions=always_escalate)
         self.assertEqual(mp_uncalibrated["calibrated_pairs"], 0)
+
+    def test_rl_environment_reward_separation(self) -> None:
+        """Verify RL environment rewards faithful investigation and penalizes unsubstantiated escalation."""
+        case = load_pilot_cases()[0]
+        env = ControlTraceEnv(case)
+        env.step({"type": "inspect", "item_id": "E1"})
+        env.step({"type": "inspect", "item_id": "E2"})
+        env.step({"type": "inspect", "item_id": "E3"})
+        env.step({"type": "cite", "item_id": "E1"})
+        env.step({"type": "cite", "item_id": "E2"})
+        env.step({"type": "exclude", "item_id": "E3"})
+        _, reward_faithful, done, info = env.step(
+            {
+                "type": "submit",
+                "conclusion": "no_violation",
+                "escalation_action": "resolve",
+            }
+        )
+        self.assertTrue(done)
+        self.assertEqual(reward_faithful, 1.0)
+        self.assertEqual(info["reward_components"]["faithfulness_reward"], 1.0)
 
 
 if __name__ == "__main__":

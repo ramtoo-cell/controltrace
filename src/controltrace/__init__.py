@@ -9,10 +9,13 @@ from .scorer import (
     evaluate_suite,
     evaluate_minimal_pairs,
 )
+from .env import ControlTraceEnv, InvestigationState
 
 __all__ = [
     "CaseScore",
     "SuiteReport",
+    "ControlTraceEnv",
+    "InvestigationState",
     "load_pilot_cases",
     "load_baseline_responses",
     "score_response",
