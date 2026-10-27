@@ -31,7 +31,7 @@ model output, per-call latency). Nothing is hand-labelled: ground truth is deriv
 | Claude Opus | 92% (86-96) | 100% (97-100) | 0% (0-3) | 82% (68-91) | 90% (77-96) |
 
 Models were called through the `claude` CLI aliases `haiku`, `sonnet`, `opus` (tools disabled, empty working
-directory, custom system prompt) on 2026-10-20; the alias resolves to whatever model Anthropic serves under that
+directory, custom system prompt) on 2026-10-20; the alias resolves to whatever model the provider serves under that
 name on that date. 13 Sonnet outputs closed the JSON with a typographic quote; they are recovered by a lenient
 field extractor applied identically to all models and flagged `parse_mode: lenient` in the data.
 
