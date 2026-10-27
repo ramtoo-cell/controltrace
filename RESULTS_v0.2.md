@@ -69,7 +69,8 @@ The second row is the point of the project: identical to the oracle on every out
    invariance twin changed the answer once (1/100), while the flip twin got a wrong new conclusion 14 times
    (14/100). 11 of those 14 landed on the middle category `control_deficiency` rather than the conclusion the
    new evidence supported. Haiku accounts for 9 of the 14 (Sonnet 2, Opus 3), and with one sample per case
-   this is a pattern to test at k >= 5, not a settled effect. Reproduce:
+   this is a pattern to test at k >= 5, not a settled effect. Exact two-sided sign test on these errors: pooled
+   14 vs 1, p = 0.001; Haiku 9 vs 0, p = 0.004; Sonnet and Opus together 5 vs 1, p = 0.22 (not significant yet). Reproduce:
    `PYTHONPATH=src python3 scripts/conditional_update.py`.
 
 ## Limitations (stated plainly)
