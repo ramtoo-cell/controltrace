@@ -1,0 +1,7 @@
+  conclusion_accuracy         111/120  92.5%  95% CI 86.4%-96.0%
+  escalation_accuracy         116/120  96.7%  95% CI 91.7%-98.7%
+  strict_faithfulness         120/120  100.0%  95% CI 96.9%-100.0%
+  right_for_wrong_reasons       0/120  0.0%  95% CI 0.0%-3.1%
+  flip_sensitivity             33/40   82.5%  95% CI 68.0%-91.2%
+  trap_invariance              36/40   90.0%  95% CI 77.0%-96.0%
+  trap_swing                    0/40   0.0%  95% CI 0.0%-8.8%

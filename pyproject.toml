@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "controltrace"
-version = "0.1.0"
+version = "0.2.0"
 description = "ControlTrace: Evaluating AI Judgment, Evidence Sufficiency, and Calibrated Escalation Under PCAOB AS 1105 & ISA 500"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -25,6 +25,7 @@ dependencies = []
 
 [project.scripts]
 controltrace = "controltrace.cli:main"
+controltrace2 = "controltrace.cli2:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -4,7 +4,31 @@
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-1f6feb?style=flat-square)](https://www.python.org/)
 [![Standards](https://img.shields.io/badge/Rubric_Anchor-PCAOB_AS_1105_%7C_ISA_500-0969da?style=flat-square)](#normative-anchor-why-audit-standards)
-[![Pilot Status](https://img.shields.io/badge/Pilot-6_Cases_%7C_2_Minimal_Pairs-2ea043?style=flat-square)](#pilot-results-6-cases)
+[![v0.2](https://img.shields.io/badge/v0.2-120_procedural_cases_%7C_3_Claude_models-2ea043?style=flat-square)](#current-results-v02-procedural-suite)
+
+---
+
+## Current Results (v0.2 procedural suite)
+
+v0.2 replaces the hand-written pilot with a procedural generator: 6 policy families x 4 outcomes x 6 trap types, ground truth derived by a rule engine from hidden evidence metadata, shuffled item order, and two counterfactual twins per case. A **flip twin** changes the admissible evidence so the label must change; an **invariance twin** changes only inadmissible traps so the label must not. Full method, limitations and reproduction steps: [`RESULTS_v0.2.md`](RESULTS_v0.2.md). Raw transcripts (full prompt and raw output for all 360 calls) are in [`results/v02/`](results/v02/).
+
+40 groups = 120 cases, 1 sample per case, Wilson 95% CIs. Models called through the `claude` CLI aliases on 2026-10-20 (aliases, not pinned snapshots).
+
+| Agent | Conclusion acc. | Faithful citations | Right for wrong reasons | Flip sensitivity | Trap invariance |
+|:--|:--|:--|:--|:--|:--|
+| Claude Haiku | 82% (74-88) | 82% (75-88) | 11% (6-18) | 57% (42-71) | 80% (65-90) |
+| Claude Sonnet | 86% (78-91) | 88% (80-92) | 11% (6-18) | 75% (60-86) | 78% (62-88) |
+| Claude Opus | 92% (86-96) | 100% (97-100) | 0% (0-3) | 82% (68-91) | 90% (77-96) |
+
+What this shows: outcome accuracy hides unfaithful evidence trails (11% of Haiku and Sonnet answers were right for the wrong reasons), and for all three models, changing the conclusion when decisive evidence changes (flip sensitivity) is harder than ignoring junk (trap invariance).
+
+**The v0.1 pilot headline did not replicate.** In the 6-case pilot below, one model run treated an unsubstantiated competitor complaint as proof (`CT-001`). On the 120-case v0.2 suite, false confirmation on an unsubstantiated allegation was 0/120 for all three models. The pilot is kept below as a record; do not cite its 1/6 or 5/6 figures as general findings.
+
+```bash
+PYTHONPATH=src python3 -m unittest discover -s tests                                       # all tests
+PYTHONPATH=src python3 -m controltrace.cli2 sim --groups 40                                 # reference policies
+PYTHONPATH=src python3 -m controltrace.cli2 report results/v02/opus_40g.jsonl --groups 40   # rescore a saved transcript
+```
 
 ---
 
@@ -42,7 +66,7 @@ Rather than collapsing performance into an opaque composite score, `controltrace
 
 ---
 
-## Pilot Results (6 Cases)
+## v0.1 Pilot Results (6 Cases, superseded; headline did not replicate)
 
 In the 6-case pilot (`data/pilot_cases_public.json`), an isolated Claude baseline (`claude-sonnet-4-20250514`, run blind with zero access to ground truth, 1 sample per case) produced the following results (`results/claude_blind_baseline_6cases.json`):
 
@@ -82,7 +106,7 @@ In the 6-case pilot (`data/pilot_cases_public.json`), an isolated Claude baselin
 
 ## Limitations (Stated Plainly)
 
-To prevent overclaiming, the current scope and limitations of this pilot are stated explicitly:
+Limitations of the v0.1 pilot are listed here; v0.2 limitations are in [`RESULTS_v0.2.md`](RESULTS_v0.2.md#limitations-stated-plainly).
 
 1. **Sample Size (`N = 6` cases):** The public pilot comprises six synthetic audit and compliance investigation cases (plus two minimal pairs). It is a proof-of-concept diagnostic, not a statistically powered leaderboard.
 2. **Single Model & Single Sample (`n = 1`):** The baseline transcript evaluates a single model (`claude-sonnet-4-20250514`) with one blind sample per case. Multi-sample variance (`pass@k`, temperature sensitivity) and cross-family comparisons (Claude Opus/Haiku, GPT, Gemini) are planned for the next phase.
